@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLIENT
+  USHER
+  ADMIN
+}
+
+model User {
+  id               String         @id @default(uuid())
+  name             String
+  nickname         String?
+  email            String         @unique
+  password         String
+  phone            String?
+  gender           String?
+  role             Role           @default(CLIENT)
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  createdAt        DateTime       @default(now())
+  usher            Usher?
+  clientProfile    ClientProfile?
+  events           Event[]
+  ratings          Rating[]
+}
+
+model ClientProfile {
+  id          String  @id @default(uuid())
+  userId      String  @unique
+  companyName String
+  jobTitle    String
+  industry    String?
+  website     String?
+  bio         String?
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Usher {
+  id               String  @id @default(uuid())
+  userId           String  @unique
+  bio              String?
+  experience       String?
+  profilePhoto     String?
+  languages        Json?
+  lat              Float?
+  lng              Float?
+  rating           Float   @default(5)
+  reliabilityScore Float   @default(100)
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookings         Booking[]
+  checkins         Checkin[]
+  ratings          Rating[]
+}
+
+model Event {
+  id             String   @id @default(uuid())
+  clientId       String
+  name           String
+  lat            Float
+  lng            Float
+  date           DateTime
+  requiredUshers Int
+  language       String
+  status         String   @default("OPEN")
+  createdAt      DateTime @default(now())
+  client         User     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  bookings       Booking[]
+  checkins       Checkin[]
+  ratings        Rating[]
+}
+
+model Booking {
+  id        String   @id @default(uuid())
+  eventId   String
+  usherId   String
+  status    String   @default("CONFIRMED")
+  createdAt DateTime @default(now())
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  usher     Usher    @relation(fields: [usherId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, usherId])
+}
+
+model Checkin {
+  id         String   @id @default(uuid())
+  usherId    String
+  eventId    String
+  lat        Float
+  lng        Float
+  distanceKm Float
+  withinZone Boolean  @default(false)
+  kind       String   @default("IN")
+  createdAt  DateTime @default(now())
+  event      Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  usher      Usher    @relation(fields: [usherId], references: [id], onDelete: Cascade)
+}
+
+model Rating {
+  id        String   @id @default(uuid())
+  eventId   String
+  usherId   String
+  raterId   String
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  usher     Usher    @relation(fields: [usherId], references: [id], onDelete: Cascade)
+  rater     User     @relation(fields: [raterId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, usherId])
+}
