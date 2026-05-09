@@ -1,50 +1,73 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Version change: none → 1.0.0
+List of modified principles:
+  - [PRINCIPLE_1_NAME] → I. Security-First (OWASP Compliance)
+  - [PRINCIPLE_2_NAME] → II. Spec-Driven Development (SDD)
+  - [PRINCIPLE_3_NAME] → III. Mobile-Ready API-First
+  - [PRINCIPLE_4_NAME] → IV. Test-Driven Integrity
+  - [PRINCIPLE_5_NAME] → V. AI Transparency & Orchestration
+Added sections:
+  - Technical Standards
+  - Governance & Compliance
+Removed sections:
+  - none
+Templates requiring updates:
+  - .specify/templates/plan-template.md (✅ aligned)
+  - .specify/templates/spec-template.md (✅ aligned)
+  - .specify/templates/tasks-template.md (✅ aligned)
+Follow-up TODOs:
+  - none
+-->
+
+# EventOps AI Platform Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Security-First (OWASP Compliance)
+The platform must adhere to OWASP Top Ten security standards for both Web and Mobile applications. Security is 
+a non-negotiable requirement integrated into every phase of the lifecycle. This includes:
+- Mandatory encryption of sensitive data at rest and in transit.
+- Rigorous input validation and output encoding to prevent injection and XSS.
+- Secure authentication using JWT and strict Role-Based Access Control (RBAC).
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Spec-Driven Development (SDD)
+No implementation code should be written without a corresponding, approved specification and plan. All 
+development must follow the Spec Kit workflow (Specify -> Plan -> Tasks -> Implement). This ensures 
+architectural alignment and reduces implementation ambiguity.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Mobile-Ready API-First
+The backend architecture must prioritize a robust, documented API that serves both the Web frontend and 
+upcoming Mobile applications. Use NestJS for structured backend services and Socket.IO for real-time 
+coordination between ushers, supervisors, and clients.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Test-Driven Integrity
+Automated testing is mandatory. Every new feature must include unit and integration tests. Critical paths, 
+especially security-sensitive workflows like authentication and authorization, must have high test coverage 
+to prevent regressions.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. AI Transparency & Orchestration
+AI-powered recommendations for usher allocation and supervisor assignment must be explainable and 
+transparent. Monitoring bots must operate within strict boundaries to ensure operational accountability 
+without compromising user privacy.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technical Standards
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+The project leverages a modern, type-safe stack:
+- **Web Frontend**: Next.js, TypeScript, TailwindCSS, and shadcn/ui.
+- **Backend**: NestJS with PostgreSQL and Prisma ORM.
+- **Real-time**: Socket.IO for live event monitoring and chat.
+- **AI**: OpenAI API and LangChain for orchestration and smart recommendations.
+- **Infrastructure**: Monorepo architecture for shared types and logic.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Governance & Compliance
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- **Authentication**: All endpoints must be secured by default; exceptions must be explicitly justified.
+- **Audit Logging**: All administrative and supervisor actions must be logged for auditability.
+- **Review Process**: All architectural changes require an update to this constitution and a version bump.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution is the foundational document for the EventOps AI Platform. It supersedes all other 
+engineering practices. Amendments require a formal update, documentation of rationale, and a semantic 
+version bump. All developers are expected to review and comply with these principles.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-05-10 | **Last Amended**: 2026-05-10
