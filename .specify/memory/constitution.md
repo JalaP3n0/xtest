@@ -41,14 +41,15 @@ upcoming Mobile applications. Use NestJS for structured backend services and Soc
 coordination between ushers, supervisors, and clients.
 
 ### IV. Test-Driven Integrity
-Automated testing is mandatory. Every new feature must include unit and integration tests. Critical paths, 
-especially security-sensitive workflows like authentication and authorization, must have high test coverage 
-to prevent regressions.
+Automated testing is mandatory. Every new feature must include unit and integration tests. A minimum of 80% 
+line coverage is required for all service and core logic. Critical paths, especially security-sensitive 
+workflows like authentication and authorization, must have high test coverage to prevent regressions.
 
 ### V. AI Transparency & Orchestration
-AI-powered recommendations for usher allocation and supervisor assignment must be explainable and 
-transparent. Monitoring bots must operate within strict boundaries to ensure operational accountability 
-without compromising user privacy.
+AI-powered recommendations for usher allocation and supervisor assignment must be explainable, transparent, 
+and free from bias. Monitoring bots must operate within strict boundaries to ensure operational 
+accountability without compromising user privacy. All AI models must prioritize data privacy and follow 
+ethical governance policies to prevent discrimination in staffing decisions.
 
 ## Technical Standards
 
@@ -58,11 +59,23 @@ The project leverages a modern, type-safe stack:
 - **Real-time**: Socket.IO for live event monitoring and chat.
 - **AI**: OpenAI API and LangChain for orchestration and smart recommendations.
 - **Infrastructure**: Monorepo architecture for shared types and logic.
+- **Deployment**: AWS (ECS/EC2) is the mandatory deployment target, utilizing Docker for containerization.
+- **Code Quality**: Airbnb JavaScript/TypeScript Style Guide is mandatory, enforced via ESLint and Prettier.
 
 ## Governance & Compliance
 
+- **Role-Based Access Control (RBAC)**: Platform access is strictly governed by the following roles:
+  - **Super Admin**: Full platform control and system-wide audit access.
+  - **Admin**: Operational management and event approvals.
+  - **Client**: Event creation and marketing campaign oversight.
+  - **Supervisor**: Real-time usher management and on-ground coordination.
+  - **Usher**: Task execution and event participation.
 - **Authentication**: All endpoints must be secured by default; exceptions must be explicitly justified.
-- **Audit Logging**: All administrative and supervisor actions must be logged for auditability.
+- **Audit Logging**: All system-critical events must be logged using the following levels:
+  - **SECURITY**: Authentication failures, unauthorized access attempts, and encryption events.
+  - **ADMIN**: Configuration changes, role assignments, and event approvals.
+  - **OPERATIONAL**: User logins, event status transitions, and supervisor assignments.
+- **Log Retention**: Audit logs must be retained for at least 365 days to support compliance and forensics.
 - **Review Process**: All architectural changes require an update to this constitution and a version bump.
 
 ## Governance
