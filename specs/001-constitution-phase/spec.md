@@ -5,6 +5,12 @@
 **Status**: Draft
 **Input**: User description: "read plan.md and create a specification for the Phase 0 — Constitution page only."
 
+## Clarifications
+
+### Session 2026-05-10
+- Q: Should the constitution define the concrete RBAC roles and specific audit logging requirements? → A: Yes, define concrete roles (Super Admin, Admin, Client, Supervisor, Usher) and specific logging levels in the constitution.
+- Q: Should the constitution specify a single mandatory deployment target or cloud-agnostic criteria? → A: Mandate a single deployment target (AWS using Docker containers).
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Define Project Governance (Priority: P1)
@@ -58,12 +64,20 @@ As an Architect, I want the constitution to define an API-first approach that su
 - **FR-004**: Constitution MUST include a technical standards section covering the project stack (Next.js, NestJS, etc.).
 - **FR-005**: System MUST establish a governance section defining amendment procedures and versioning policies.
 - **FR-006**: Constitution MUST track ratification and last amended dates.
+- **FR-007**: Constitution MUST define concrete RBAC roles (Super Admin, Admin, Client, Supervisor, Usher) and their core permissions.
+- **FR-008**: Constitution MUST specify audit logging requirements, including mandatory events and log retention policies.
+- **FR-009**: Constitution MUST mandate AWS with Docker as the single deployment target for the platform.
+- **FR-010**: Constitution MUST establish AI governance policies prioritizing ethical usage, bias prevention, and data privacy for recommendation engines.
+- **FR-011**: Constitution MUST mandate a minimum test coverage of 80% for all service and core logic implementation.
+- **FR-012**: Constitution MUST mandate a project-wide coding style guide (e.g., Airbnb) enforced by automated linting and formatting tools.
 
 ### Key Entities *(include if feature involves data)*
 
 - **Constitution**: The primary document containing principles, standards, and governance rules.
 - **Principle**: A non-negotiable rule governing project development.
 - **Governance Rule**: Procedures for amending the constitution and managing versions.
+- **RBAC Role**: A defined set of permissions for a specific platform user type.
+- **Audit Log Policy**: Rules for capturing and storing security-critical system events.
 
 ## Success Criteria *(mandatory)*
 
@@ -79,3 +93,4 @@ As an Architect, I want the constitution to define an API-first approach that su
 - The Spec Kit workflow is the primary development methodology.
 - The project stack (NestJS, Next.js, etc.) is fixed for the MVP.
 - Mobile integration will follow shortly after the web MVP.
+gration will follow shortly after the web MVP.
