@@ -13,12 +13,10 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.enableCors({
-    origin: [
-      'https://xtest-q32v-n13ohkvjy-m-eg-z-s-projects.vercel.app',
-      'http://localhost:3000', // Allow local development
-    ],
+    origin: true, // Allow any origin to resolve Vercel preview URL issues
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
+    optionsSuccessStatus: 200,
   });
   const port = process.env.PORT || 3001;
   await app.listen(port, '0.0.0.0');
