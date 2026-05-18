@@ -77,8 +77,8 @@ export default function UsherSignupPage() {
             </label>
 
             <div className="account-grid" style={{ gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
-              <label className="field">
-                Gender
+              <div className="field">
+                <label>Gender</label>
                 <select 
                   required 
                   value={gender} 
@@ -89,7 +89,7 @@ export default function UsherSignupPage() {
                   <option value="Female">Female</option>
                   <option value="Other">Other</option>
                 </select>
-              </label>
+              </div>
               <label className="field">
                 Phone
                 <input required type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+123456789" />

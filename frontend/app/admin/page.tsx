@@ -3,6 +3,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/Header";
+import Link from "next/link";
 
 type OpsSummary = {
   periodDays: number;
@@ -138,84 +139,97 @@ export default function AdminDashboardPage() {
   return (
     <main className="app-shell dashboard">
       <Header />
-      <header className="dashboard-header">
+      <header className="dashboard-header" style={{ marginBottom: '64px' }}>
         <div>
-          <p className="eyebrow">Operations</p>
-          <h1 className="page-title compact">Admin Dashboard</h1>
-          <p className="lede">Monitor summaries, no-show alerts, and usher reliability.</p>
+          <p className="eyebrow">Operations Management</p>
+          <h1 className="page-title compact">Command Center</h1>
+          <p className="lede">Real-time summaries and usher reliability metrics.</p>
         </div>
       </header>
 
-      <section className="toolbar panel">
-        <div className="toolbar-inner">
-          <label>
-            Days:
+      <section className="toolbar glass" style={{ marginBottom: '48px', padding: '32px', borderRadius: 'var(--radius-lg)' }}>
+        <div className="toolbar-inner" style={{ gap: '32px' }}>
+          <div className="field" style={{ marginBottom: 0 }}>
+            <label style={{ fontSize: '0.65rem' }}>Time Period (Days)</label>
             <input
               type="number"
               min={1}
               max={90}
               value={days}
               onChange={(e) => setDays(Number(e.target.value || 7))}
+              style={{ width: '120px' }}
             />
-          </label>
-          <label>
-            Limit:
+          </div>
+          <div className="field" style={{ marginBottom: 0 }}>
+            <label style={{ fontSize: '0.65rem' }}>Result Limit</label>
             <input
               type="number"
               min={1}
               max={200}
               value={limit}
               onChange={(e) => setLimit(Number(e.target.value || 20))}
+              style={{ width: '120px' }}
             />
-          </label>
-          <button className="button" onClick={() => token && loadDashboard(token)} disabled={loading}>
-            {loading ? "Loading..." : "Refresh Dashboard"}
+          </div>
+          <button className="button" style={{ alignSelf: 'flex-end', height: '54px' }} onClick={() => token && loadDashboard(token)} disabled={loading}>
+            {loading ? "Synchronizing..." : "Refresh Intelligence"}
           </button>
         </div>
-        {error ? <p className="error-box">{error}</p> : null}
+        {error ? <p className="error-box" style={{ marginTop: '24px' }}>{error}</p> : null}
       </section>
 
-      <section className="metric-grid">
+      <section className="metric-grid" style={{ marginBottom: '80px' }}>
         {summary ? (
           <>
-            <MetricCard title="Events" value={summary.metrics.events} />
-            <MetricCard title="Active Events" value={summary.metrics.activeEvents} />
-            <MetricCard title="Bookings" value={summary.metrics.bookings} />
-            <MetricCard title="No-Shows" value={summary.metrics.noShows} />
-            <MetricCard title="Check-ins" value={summary.metrics.checkins} />
-            <MetricCard title="Ratings" value={summary.metrics.ratings} />
+            <MetricCard title="Total Events" value={summary.metrics.events} />
+            <MetricCard title="Active Operations" value={summary.metrics.activeEvents} />
+            <MetricCard title="Staff Bookings" value={summary.metrics.bookings} />
+            <MetricCard title="No-Show Incidents" value={summary.metrics.noShows} variant="danger" />
+            <MetricCard title="System Check-ins" value={summary.metrics.checkins} />
+            <MetricCard title="Performance Ratings" value={summary.metrics.ratings} />
           </>
         ) : (
-          <p className="empty-state">No data loaded.</p>
+          <p className="empty-state">System data currently unavailable.</p>
         )}
       </section>
 
-      <section className="table-section">
-        <h2 className="section-title">No-Show Alerts</h2>
-        <div className="table-wrap">
+      <section className="table-section" style={{ marginBottom: '100px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '32px' }}>
+          <h2 className="luxury-heading" style={{ fontSize: '1.25rem', color: 'var(--accent)' }}>Critical Alerts: No-Shows</h2>
+          <span style={{ fontSize: '0.75rem', color: 'var(--muted)' }}>Showing latest {alerts.length} incidents</span>
+        </div>
+        <div className="table-wrap glass" style={{ border: '1px solid rgba(255,255,255,0.05)' }}>
           <table>
             <thead>
               <tr>
-                <Th>Event</Th>
-                <Th>Client</Th>
-                <Th>Usher</Th>
-                <Th>Reliability</Th>
-                <Th>Reported At</Th>
+                <Th>Event Profile</Th>
+                <Th>Partner</Th>
+                <Th>Assigned Usher</Th>
+                <Th>Impact Score</Th>
+                <Th>Timestamp</Th>
               </tr>
             </thead>
             <tbody>
               {alerts.length === 0 ? (
                 <tr>
-                  <Td colSpan={5}>No alerts yet.</Td>
+                  <Td colSpan={5} style={{ textAlign: 'center', padding: '64px' }}>
+                    <div style={{ opacity: 0.5 }}>No critical alerts detected in this period.</div>
+                  </Td>
                 </tr>
               ) : (
                 alerts.map((row) => (
                   <tr key={row.id}>
-                    <Td>{row.event?.name || "-"}</Td>
+                    <Td><strong style={{ color: 'var(--ink)' }}>{row.event?.name || "-"}</strong></Td>
                     <Td>{row.event?.client?.name || "-"}</Td>
                     <Td>{row.usher?.user?.name || "-"}</Td>
-                    <Td>{row.usher?.reliabilityScore ?? "-"}</Td>
-                    <Td suppressHydrationWarning>{new Date(row.createdAt).toLocaleString()}</Td>
+                    <Td>
+                      <span style={{ color: row.usher?.reliabilityScore < 50 ? 'var(--danger)' : 'var(--muted)' }}>
+                        {row.usher?.reliabilityScore ?? "-"}%
+                      </span>
+                    </Td>
+                    <Td suppressHydrationWarning style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>
+                      {new Date(row.createdAt).toLocaleString()}
+                    </Td>
                   </tr>
                 ))
               )}
@@ -224,16 +238,19 @@ export default function AdminDashboardPage() {
         </div>
       </section>
 
-      <section className="table-section">
-        <h2 className="section-title">Reliability Leaderboard (Lowest First)</h2>
-        <div className="table-wrap">
+      <section className="table-section" style={{ marginBottom: '100px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '32px' }}>
+          <h2 className="luxury-heading" style={{ fontSize: '1.25rem', color: 'var(--accent)' }}>Performance Leaderboard</h2>
+          <Link href="/admin/reliability" className="text-link" style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent)' }}>VIEW FULL REPORT &rarr;</Link>
+        </div>
+        <div className="table-wrap glass" style={{ border: '1px solid rgba(255,255,255,0.05)' }}>
           <table>
             <thead>
               <tr>
-                <Th>Usher</Th>
-                <Th>Email</Th>
+                <Th>Usher Identity</Th>
+                <Th>Contact</Th>
                 <Th>Reliability</Th>
-                <Th>Rating</Th>
+                <Th>Avg Rating</Th>
                 <Th>Bookings</Th>
                 <Th>Check-ins</Th>
               </tr>
@@ -241,15 +258,24 @@ export default function AdminDashboardPage() {
             <tbody>
               {reliability.length === 0 ? (
                 <tr>
-                  <Td colSpan={6}>No reliability data yet.</Td>
+                  <Td colSpan={6} style={{ textAlign: 'center', padding: '64px' }}>
+                    <div style={{ opacity: 0.5 }}>Reliability data is being computed...</div>
+                  </Td>
                 </tr>
               ) : (
                 reliability.map((row) => (
                   <tr key={row.usherId}>
-                    <Td>{row.user?.name || "-"}</Td>
-                    <Td>{row.user?.email || "-"}</Td>
-                    <Td>{row.reliabilityScore}</Td>
-                    <Td>{row.rating}</Td>
+                    <Td><strong style={{ color: 'var(--ink)' }}>{row.user?.name || "-"}</strong></Td>
+                    <Td style={{ fontSize: '0.8rem', opacity: 0.7 }}>{row.user?.email || "-"}</Td>
+                    <Td>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div style={{ width: '60px', height: '4px', background: 'var(--bg-subtle)', borderRadius: '2px', overflow: 'hidden' }}>
+                          <div style={{ width: `${row.reliabilityScore}%`, height: '100%', background: 'var(--accent)' }} />
+                        </div>
+                        {row.reliabilityScore}%
+                      </div>
+                    </Td>
+                    <Td>⭐ {row.rating}</Td>
                     <Td>{row.bookingsCount}</Td>
                     <Td>{row.checkinsCount}</Td>
                   </tr>
@@ -263,19 +289,29 @@ export default function AdminDashboardPage() {
   );
 }
 
-function MetricCard({ title, value }: { title: string; value: number }) {
+function MetricCard({ title, value, variant }: { title: string; value: number; variant?: "danger" }) {
   return (
-    <div className="metric-card">
-      <div className="metric-title">{title}</div>
-      <div className="metric-value">{value}</div>
+    <div className="metric-card glass" style={{ 
+      padding: '32px', 
+      borderTop: `2px solid ${variant === "danger" ? 'var(--danger)' : 'var(--accent)'}`,
+      background: 'rgba(255,255,255,0.01)'
+    }}>
+      <div className="metric-title" style={{ letterSpacing: '2px', fontSize: '0.65rem' }}>{title}</div>
+      <div className="metric-value" style={{ 
+        marginTop: '12px', 
+        fontSize: '2.5rem', 
+        color: variant === "danger" ? 'var(--danger)' : 'var(--ink)',
+        fontWeight: 900,
+        letterSpacing: '-1px'
+      }}>{value}</div>
     </div>
   );
 }
 
 function Th({ children }: { children: ReactNode }) {
-  return <th>{children}</th>;
+  return <th style={{ padding: '20px 24px', textAlign: 'left', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>{children}</th>;
 }
 
-function Td({ children, colSpan }: { children: ReactNode; colSpan?: number }) {
-  return <td colSpan={colSpan}>{children}</td>;
+function Td({ children, colSpan, suppressHydrationWarning, style }: { children: ReactNode; colSpan?: number; suppressHydrationWarning?: boolean; style?: React.CSSProperties }) {
+  return <td colSpan={colSpan} suppressHydrationWarning={suppressHydrationWarning} style={{ padding: '20px 24px', ...style }}>{children}</td>;
 }

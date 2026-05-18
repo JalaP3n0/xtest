@@ -238,43 +238,46 @@ function AccountContent() {
     <main className="app-shell">
       <Header />
 
-      <section className="panel">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px" }}>
+      <section className="panel glass" style={{ padding: '64px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 'var(--radius-lg)' }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "48px" }}>
           <div>
-            <p className="eyebrow">{profile?.role} Profile</p>
-            <h1 className="page-title compact">{profile?.name}</h1>
+            <p className="eyebrow">{profile?.role} IDENTITY</p>
+            <h1 className="page-title compact" style={{ fontSize: '2.5rem' }}>{profile?.name}</h1>
             {profile?.role === "CLIENT" && profile.clientProfile && (
-              <p className="lede" style={{ marginTop: 4 }}>{profile.clientProfile.jobTitle} at {profile.clientProfile.companyName}</p>
+              <p className="lede" style={{ marginTop: 8, fontSize: '1rem', color: 'var(--accent)', fontWeight: 600 }}>
+                {profile.clientProfile.jobTitle} <span style={{ color: 'var(--muted)', fontWeight: 400 }}>at</span> {profile.clientProfile.companyName}
+              </p>
             )}
           </div>
-          <div className="button-row">
+          <div className="button-row" style={{ gap: '16px' }}>
             {!isEditing ? (
-              <button className="button" onClick={() => setIsEditing(true)}>Edit Profile</button>
+              <button className="button" style={{ height: '48px', padding: '0 32px' }} onClick={() => setIsEditing(true)}>EDIT PROFILE</button>
             ) : (
               <>
-                <button className="button secondary" onClick={() => setIsEditing(false)}>Cancel</button>
-                <button className="button" onClick={saveProfile} disabled={saving}>{saving ? "Saving..." : "Save Changes"}</button>
+                <button className="button secondary" style={{ height: '48px', padding: '0 24px' }} onClick={() => setIsEditing(false)}>CANCEL</button>
+                <button className="button" style={{ height: '48px', padding: '0 32px' }} onClick={saveProfile} disabled={saving}>{saving ? "SAVING..." : "SAVE CHANGES"}</button>
               </>
             )}
-            <button className="button secondary" onClick={logout}>Logout</button>
           </div>
         </div>
 
-        {error && <p className="error-box">{error}</p>}
-        {success && <p className="status-pill" style={{ color: "var(--success)", borderColor: "var(--success)", background: "transparent", display: "block", marginBottom: 16 }}>{success}</p>}
+        {error && <p className="error-box" style={{ marginBottom: '32px' }}>{error}</p>}
+        {success && <p style={{ color: "var(--success)", fontWeight: 700, marginBottom: '32px', fontSize: '0.9rem', letterSpacing: '1px' }}>{success.toUpperCase()}</p>}
 
-        <div className="account-grid">
-          <div className="profile-item">
-            <div className="profile-label">Email</div>
-            <div className="profile-value">{profile?.email}</div>
+        <div className="account-grid" style={{ gap: '32px' }}>
+          <div className="profile-item glass" style={{ padding: '32px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div className="profile-label" style={{ color: 'var(--accent)', letterSpacing: '2px', fontWeight: 800 }}>Account Email</div>
+            <div className="profile-value" style={{ marginTop: '12px', fontSize: '1.1rem', fontWeight: 600 }}>{profile?.email}</div>
           </div>
           
-          <div className="profile-item">
-            <div className="profile-label">Phone</div>
+          <div className="profile-item glass" style={{ padding: '32px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div className="profile-label" style={{ color: 'var(--accent)', letterSpacing: '2px', fontWeight: 800 }}>Contact Intelligence</div>
             {!isEditing ? (
-              <div className="profile-value">{profile?.phone || "-"}</div>
+              <div className="profile-value" style={{ marginTop: '12px', fontSize: '1.1rem', fontWeight: 600 }}>{profile?.phone || "NOT SPECIFIED"}</div>
             ) : (
-              <input className="field" style={{ marginTop: 8, width: '100%' }} value={editPhone} onChange={(e) => setEditPhone(e.target.value)} placeholder="Phone" />
+              <div className="field" style={{ marginTop: 16, marginBottom: 0 }}>
+                <input style={{ height: '48px' }} value={editPhone} onChange={(e) => setEditPhone(e.target.value)} placeholder="e.g. +1 555 0123" />
+              </div>
             )}
           </div>
 
@@ -285,7 +288,7 @@ function AccountContent() {
                 {!isEditing ? (
                   <div className="profile-value">{profile?.gender || "-"}</div>
                 ) : (
-                  <select style={{ marginTop: 8, width: '100%', height: 42, padding: '0 12px', border: '1px solid var(--line)', borderRadius: 'var(--radius)' }} value={editGender} onChange={(e) => setEditGender(e.target.value)}>
+                  <select className="field" value={editGender} onChange={(e) => setEditGender(e.target.value)}>
                     <option value="">Select...</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -294,14 +297,16 @@ function AccountContent() {
                 )}
               </div>
 
-              <div className="profile-item">
-                <div className="profile-label">Nickname</div>
-                {!isEditing ? (
-                  <div className="profile-value">{profile?.nickname || "-"}</div>
-                ) : (
-                  <input className="field" style={{ marginTop: 8, width: '100%' }} value={editNickname} onChange={(e) => setEditNickname(e.target.value)} placeholder="Nickname" />
-                )}
+          <div className="profile-item glass" style={{ padding: '32px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div className="profile-label" style={{ color: 'var(--accent)', letterSpacing: '2px', fontWeight: 800 }}>IDENTITY ASSET (NICKNAME)</div>
+            {!isEditing ? (
+              <div className="profile-value" style={{ marginTop: '12px', fontSize: '1.1rem', fontWeight: 600 }}>{profile?.nickname || "NOT SET"}</div>
+            ) : (
+              <div className="field" style={{ marginTop: 16, marginBottom: 0 }}>
+                <input style={{ height: '48px' }} value={editNickname} onChange={(e) => setEditNickname(e.target.value)} placeholder="e.g. Johnny" />
               </div>
+            )}
+          </div>
             </>
           )}
         </div>
@@ -327,20 +332,25 @@ function AccountContent() {
                   <input className="field" style={{ marginTop: 8, width: '100%' }} value={editJobTitle} onChange={(e) => setEditJobTitle(e.target.value)} />
                 )}
               </div>
-              <div className="profile-item">
-                <div className="profile-label">Industry</div>
+              <div className="profile-item glass" style={{ padding: '32px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div className="profile-label" style={{ color: 'var(--accent)', letterSpacing: '2px', fontWeight: 800 }}>Corporate Industry</div>
                 {!isEditing ? (
-                  <div className="profile-value">{profile.clientProfile?.industry || "-"}</div>
+                  <div className="profile-value" style={{ marginTop: '12px', fontSize: '1.1rem', fontWeight: 600 }}>{profile.clientProfile?.industry || "NOT SPECIFIED"}</div>
                 ) : (
-                  <input className="field" style={{ marginTop: 8, width: '100%' }} value={editIndustry} onChange={(e) => setEditIndustry(e.target.value)} />
+                  <div className="field" style={{ marginTop: 16, marginBottom: 0 }}>
+                    <input style={{ height: '48px' }} value={editIndustry} onChange={(e) => setEditIndustry(e.target.value)} placeholder="e.g. Entertainment" />
+                  </div>
                 )}
               </div>
-              <div className="profile-item">
-                <div className="profile-label">Website</div>
+
+              <div className="profile-item glass" style={{ padding: '32px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div className="profile-label" style={{ color: 'var(--accent)', letterSpacing: '2px', fontWeight: 800 }}>Digital Presence (Website)</div>
                 {!isEditing ? (
-                  <div className="profile-value">{profile.clientProfile?.website || "-"}</div>
+                  <div className="profile-value" style={{ marginTop: '12px', fontSize: '1.1rem', fontWeight: 600 }}>{profile.clientProfile?.website || "NONE"}</div>
                 ) : (
-                  <input className="field" style={{ marginTop: 8, width: '100%' }} value={editWebsite} onChange={(e) => setEditWebsite(e.target.value)} />
+                  <div className="field" style={{ marginTop: 16, marginBottom: 0 }}>
+                    <input style={{ height: '48px' }} value={editWebsite} onChange={(e) => setEditWebsite(e.target.value)} placeholder="e.g. https://xptions.com" />
+                  </div>
                 )}
               </div>
             </div>
@@ -450,7 +460,7 @@ function AccountContent() {
                   {editLanguages.map((l, i) => (
                     <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                       <input className="field" style={{ flex: 2 }} value={l.language} onChange={(e) => updateLanguage(i, 'language', e.target.value)} placeholder="Language (e.g. English)" />
-                      <select style={{ flex: 1, height: 42, padding: '0 8px', border: '1px solid var(--line)', borderRadius: 'var(--radius)' }} value={l.level} onChange={(e) => updateLanguage(i, 'level', e.target.value)}>
+                      <select className="field" style={{ flex: 1, height: '42px' }} value={l.level} onChange={(e) => updateLanguage(i, 'level', e.target.value)}>
                         <option value="Beginner">Beginner</option>
                         <option value="Intermediate">Intermediate</option>
                         <option value="Advanced">Advanced</option>

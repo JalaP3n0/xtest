@@ -26,10 +26,10 @@ description: "Task list for EventOps AI Platform Core Development"
 
 **Purpose**: Initialize multi-tenant project structure and base configuration
 
-- [ ] T001 Initialize Prisma schema with multi-tenant `Company` entity in `backend/prisma/schema.prisma`
-- [ ] T002 [P] Configure Redis client for Socket.IO scaling in `backend/src/config/redis.config.ts`
-- [ ] T003 [P] Setup FCM and Twilio API clients in `backend/src/lib/notifications.ts`
-- [ ] T004 Initialize shared TypeScript types for monorepo in `packages/types/index.ts`
+- [x] T001 Initialize Prisma schema with multi-tenant `Company` entity in `backend/prisma/schema.prisma`
+- [x] T002 [P] Configure Redis client for Socket.IO scaling in `backend/src/config/redis.config.ts`
+- [x] T003 [P] Setup FCM and Twilio API clients in `backend/src/lib/notifications.ts`
+- [x] T004 Initialize shared TypeScript types for monorepo in `packages/types/index.ts`
 
 ---
 
@@ -37,10 +37,10 @@ description: "Task list for EventOps AI Platform Core Development"
 
 **Purpose**: Core multi-tenant and authentication framework
 
-- [ ] T005 [P] Implement `Company` management API (Create/List) in `backend/src/company/`
-- [ ] T006 Implement JWT strategy with tenant-id extraction in `backend/src/auth/jwt.strategy.ts`
-- [ ] T007 Implement RBAC Guards and `@Roles` decorator in `backend/src/auth/guards/roles.guard.ts`
-- [ ] T008 [P] Implement multi-tenant Prisma middleware to enforce `companyId` filters in `backend/src/lib/prisma.middleware.ts`
+- [x] T005 [P] Implement `Company` management API (Create/List) in `backend/src/company/`
+- [x] T006 Implement JWT strategy with tenant-id extraction in `backend/src/auth/jwt.strategy.ts`
+- [x] T007 Implement RBAC Guards and `@Roles` decorator in `backend/src/auth/guards/roles.guard.ts`
+- [x] T008 [P] Implement multi-tenant Prisma middleware to enforce `companyId` filters in `backend/src/lib/prisma.middleware.ts`
 
 **Checkpoint**: Foundation ready - tenant-isolated authentication is functional.
 
@@ -52,11 +52,11 @@ description: "Task list for EventOps AI Platform Core Development"
 
 **Independent Test**: Register a user for a specific company and verify JWT contains correct `companyId` and `role`.
 
-- [ ] T009 [P] [US1] Create `User` model with `companyId` and `role` enum in `backend/prisma/schema.prisma`
-- [ ] T010 [US1] Implement Registration logic (Password hashing) in `backend/src/auth/auth.service.ts`
-- [ ] T011 [US1] Implement Login endpoint with Refresh Tokens in `backend/src/auth/auth.controller.ts`
-- [ ] T012 [P] [US1] Build Registration and Login UI in `frontend/app/(auth)/`
-- [ ] T013 [US1] Integrate Auth context and API services in `frontend/services/auth.service.ts`
+- [x] T009 [P] [US1] Create `User` model with `companyId` and `role` enum in `backend/prisma/schema.prisma`
+- [x] T010 [US1] Implement Registration logic (Password hashing) in `backend/src/auth/auth.service.ts`
+- [x] T011 [US1] Implement Login endpoint with Refresh Tokens in `backend/src/auth/auth.controller.ts`
+- [x] T012 [P] [US1] Build Registration and Login UI in `frontend/app/(auth)/`
+- [x] T013 [US1] Integrate Auth context and API services in `frontend/services/auth.service.ts`
 
 **Checkpoint**: User Story 1 complete. Users can onboard and authenticate.
 
@@ -68,11 +68,11 @@ description: "Task list for EventOps AI Platform Core Development"
 
 **Independent Test**: Create event as Client; approve as Admin; verify status transitions.
 
-- [ ] T014 [P] [US2] Create `Event` model in `backend/prisma/schema.prisma`
-- [ ] T015 [US2] Implement Event Creation API with validation in `backend/src/events/events.service.ts`
-- [ ] T016 [US2] Implement Admin Approval endpoint in `backend/src/events/admin.controller.ts`
-- [ ] T017 [P] [US2] Build Client Event Creation form in `frontend/app/client/events/new/`
-- [ ] T018 [P] [US2] Build Admin Approval dashboard in `frontend/app/admin/approvals/`
+- [x] T014 [P] [US2] Create `Event` model in `backend/prisma/schema.prisma`
+- [x] T015 [US2] Implement Event Creation API with validation in `backend/src/events/events.service.ts`
+- [x] T016 [US2] Implement Admin Approval endpoint in `backend/src/events/admin.controller.ts`
+- [x] T017 [P] [US2] Build Client Event Creation form in `frontend/app/client/events/new/`
+- [x] T018 [P] [US2] Build Admin Approval dashboard in `frontend/app/admin/approvals/`
 
 **Checkpoint**: User Story 2 complete. Core event workflow is functional.
 
@@ -84,11 +84,11 @@ description: "Task list for EventOps AI Platform Core Development"
 
 **Independent Test**: Trigger recommendation for an event and verify ranked list of ushers with explainability scores.
 
-- [ ] T019 [P] [US3] Create `StaffingAssignment` model in `backend/prisma/schema.prisma`
-- [ ] T020 [US3] Implement pgvector similarity search for usher profiles in `backend/src/staffing/recommendation.engine.ts`
-- [ ] T021 [US3] Integrate OpenAI for explainable ranking breakdown in `backend/src/staffing/ai.service.ts`
-- [ ] T022 [US3] Implement Staffing Recommendation API in `backend/src/events/events.controller.ts`
-- [ ] T023 [P] [US3] Build Staffing Recommendation UI in `frontend/app/admin/events/[id]/staffing/`
+- [x] T019 [P] [US3] Create `StaffingAssignment` model in `backend/prisma/schema.prisma`
+- [x] T020 [US3] Implement pgvector similarity search for usher profiles in `backend/src/staffing/recommendation.engine.ts`
+- [x] T021 [US3] Integrate OpenAI for explainable ranking breakdown in `backend/src/staffing/ai.service.ts`
+- [x] T022 [US3] Implement Staffing Recommendation API in `backend/src/events/events.controller.ts`
+- [x] T023 [P] [US3] Build Staffing Recommendation UI in `frontend/app/admin/events/[id]/staffing/`
 
 **Checkpoint**: User Story 3 complete. AI staffing is operational.
 
@@ -100,11 +100,11 @@ description: "Task list for EventOps AI Platform Core Development"
 
 **Independent Test**: Send real-time message; perform dual-verification (QR+Photo); verify photo stored in S3.
 
-- [ ] T024 [P] [US4] Implement Socket.IO Gateway with Redis adapter in `backend/src/chat/chat.gateway.ts`
-- [ ] T025 [US4] Implement Dual-Verification API (QR + S3 Photo Upload) in `backend/src/staffing/verification.service.ts`
-- [ ] T026 [US4] Implement Monitoring Bot triggers (random photo requests) in `backend/src/bot/monitoring.service.ts`
-- [ ] T027 [P] [US4] Build Real-time Chat UI in `frontend/app/events/[id]/chat/`
-- [ ] T028 [P] [US4] Implement QR Scanner and Camera UI for verification in `frontend/app/supervisor/verify/`
+- [x] T024 [P] [US4] Implement Socket.IO Gateway with Redis adapter in `backend/src/chat/chat.gateway.ts`
+- [x] T025 [US4] Implement Dual-Verification API (QR + S3 Photo Upload) in `backend/src/staffing/verification.service.ts`
+- [x] T026 [US4] Implement Monitoring Bot triggers (random photo requests) in `backend/src/bot/monitoring.service.ts`
+- [x] T027 [P] [US4] Build Real-time Chat UI in `frontend/app/events/[id]/chat/`
+- [x] T028 [P] [US4] Implement QR Scanner and Camera UI for verification in `frontend/app/supervisor/verify/`
 
 **Checkpoint**: User Story 4 complete. Live event operations are supported.
 
@@ -116,10 +116,10 @@ description: "Task list for EventOps AI Platform Core Development"
 
 **Independent Test**: Generate QR for campaign; track scan; view analytics report.
 
-- [ ] T029 [P] [US5] Create `MarketingCampaign` model in `backend/prisma/schema.prisma`
-- [ ] T030 [US5] Implement QR Scan tracking and lead collection in `backend/src/marketing/tracking.service.ts`
-- [ ] T031 [US5] Implement Analytics aggregation service in `backend/src/analytics/reports.service.ts`
-- [ ] T032 [P] [US5] Build Analytics Dashboards in `frontend/app/client/analytics/`
+- [x] T029 [P] [US5] Create `MarketingCampaign` model in `backend/prisma/schema.prisma`
+- [x] T030 [US5] Implement QR Scan tracking and lead collection in `backend/src/marketing/tracking.service.ts`
+- [x] T031 [US5] Implement Analytics aggregation service in `backend/src/analytics/reports.service.ts`
+- [x] T032 [P] [US5] Build Analytics Dashboards in `frontend/app/client/analytics/`
 
 **Checkpoint**: All user stories complete. Platform is feature-complete for MVP.
 
@@ -129,10 +129,10 @@ description: "Task list for EventOps AI Platform Core Development"
 
 **Purpose**: Security hardening, testing, and deployment.
 
-- [ ] T033 [P] Configure S3 Lifecycle Policy for 90-day media deletion in `infrastructure/s3.tf`
-- [ ] T034 [P] Implement 3-level structured Audit Logging in `backend/src/lib/audit.logger.ts`
-- [ ] T035 Achieve 80% test coverage for core logic in `backend/tests/` and `frontend/tests/`
-- [ ] T036 Final security review (OWASP A01-A10) and performance tuning.
+- [x] T033 [P] Configure S3 Lifecycle Policy for 90-day media deletion in `infrastructure/s3.tf`
+- [x] T034 [P] Implement 3-level structured Audit Logging in `backend/src/lib/audit.logger.ts`
+- [x] T035 Achieve 80% test coverage for core logic in `backend/tests/` and `frontend/tests/`
+- [x] T036 Final security review (OWASP A01-A10) and performance tuning.
 
 ---
 
