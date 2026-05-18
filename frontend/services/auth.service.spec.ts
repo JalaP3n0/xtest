@@ -22,6 +22,16 @@ describe('authService', () => {
     localStorage.clear();
   });
 
+  it('should call register', async () => {
+    const mockData = { user: { id: '1', email: 'test@example.com' } };
+    (axios.post as any).mockResolvedValue({ data: mockData });
+
+    const result = await authService.register({ email: 'test@example.com', password: 'password', role: 'usher' });
+
+    expect(axios.post).toHaveBeenCalledWith('/auth/signup', { email: 'test@example.com', password: 'password', role: 'usher' });
+    expect(result).toEqual(mockData);
+  });
+
   it('should call login and store tokens', async () => {
     const mockData = {
       accessToken: 'access',
