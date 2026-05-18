@@ -19,6 +19,6 @@ module.exports = {
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
   moduleNameMapper: {
-    '^packages/(.*)$': '<rootDir>/../../packages/$1',
+    '^packages/(.*)$': '<rootDir>/../packages/$1',
   },
 };
