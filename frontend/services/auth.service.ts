@@ -16,6 +16,11 @@ api.interceptors.request.use((config) => {
 });
 
 export const authService = {
+  async register(credentials: any) {
+    const response = await api.post('/auth/signup', credentials);
+    return response.data;
+  },
+
   async login(credentials: any) {
     // Call the backend directly via our configured 'api' instance
     const response = await api.post('/auth/login', credentials);
