@@ -7,8 +7,9 @@ const { PrismaClient } = require("@prisma/client");
 dotenv.config();
 const prisma = new PrismaClient();
 
-const DEMO_PASSWORD = "DemoPass123!";
+const DEMO_PASSWORD = "DefaCtoAfreCano@159";
 const DEMO_USERS = {
+  superadmin: { name: "Super Admin", email: "superadmin@ushereel.com", role: "SUPER_ADMIN" },
   admin: { name: "Demo Admin", email: "demo.admin@ushereel.com", role: "ADMIN" },
   client: { name: "Demo Client", email: "demo.client@ushereel.com", role: "CLIENT" },
   usher1: { name: "Demo Usher One", email: "demo.usher1@ushereel.com", role: "USHER" },
@@ -36,6 +37,7 @@ async function upsertUser(user, hashedPassword) {
 async function main() {
   const hashedPassword = await bcrypt.hash(DEMO_PASSWORD, 10);
 
+  const superadmin = await upsertUser(DEMO_USERS.superadmin, hashedPassword);
   const admin = await upsertUser(DEMO_USERS.admin, hashedPassword);
   const client = await upsertUser(DEMO_USERS.client, hashedPassword);
   const usherOneUser = await upsertUser(DEMO_USERS.usher1, hashedPassword);
@@ -182,6 +184,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     credentials: {
       password: DEMO_PASSWORD,
+      superadmin: DEMO_USERS.superadmin.email,
       admin: DEMO_USERS.admin.email,
       client: DEMO_USERS.client.email,
       usher1: DEMO_USERS.usher1.email,
@@ -212,4 +215,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-
