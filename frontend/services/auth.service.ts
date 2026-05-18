@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://backend-production-2bdc.up.railway.app/api';
 
 const api = axios.create({
   baseURL: API_URL,
 });
 
+// Interceptor ensures every request gets the Authorization header
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
   if (token) {
@@ -15,17 +16,24 @@ api.interceptors.request.use((config) => {
 });
 
 export const authService = {
-  async register(data: any) {
-    return api.post('/auth/register', data);
+  async login(credentials: any) {
+    // Call the backend directly via our configured 'api' instance
+    const response = await api.post('/auth/login', credentials);
+    const data = response.data;
+
+    if (data.accessToken) {
+      localStorage.setItem('accessToken', data.accessToken);
+      if (data.refreshToken) {
+        localStorage.setItem('refreshToken', data.refreshToken);
+      }
+      localStorage.setItem('user', JSON.stringify(data.user));
+    }
+    return data;
   },
 
-  async login(credentials: any) {
-    const response = await api.post('/auth/login', credentials);
-    if (response.data.accessToken) {
-      localStorage.setItem('accessToken', response.data.accessToken);
-      localStorage.setItem('refreshToken', response.data.refreshToken);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-    }
+  async getMe() {
+    // This now correctly hits /api/auth/me with the Authorization header
+    const response = await api.get('/auth/me');
     return response.data;
   },
 
