@@ -10,7 +10,14 @@ async function bootstrap() {
   app.useWebSocketAdapter(redisIoAdapter);
 
   app.setGlobalPrefix('api');
-  app.enableCors();
+  app.enableCors({
+    origin: [
+      'https://xtest-q32v-n13ohkvjy-m-eg-z-s-projects.vercel.app',
+      'http://localhost:3000', // Allow local development
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
   const port = process.env.PORT || 3001;
   await app.listen(port);
   console.log(`NestJS application is running on port: ${port}`);
