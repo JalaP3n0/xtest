@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-05-14T12:19:57.251Z",
+  "credentials": {
+    "password": "DefaCtoAfreCano@159",
+    "superadmin": "superadmin@ushereel.com",
+    "admin": "demo.admin@ushereel.com",
+    "client": "demo.client@ushereel.com",
+    "usher1": "demo.usher1@ushereel.com",
+    "usher2": "demo.usher2@ushereel.com"
+  },
+  "ids": {
+    "eventId": "07920883-1c81-40f0-ada6-753131896942",
+    "booking1Id": "01528edc-62c8-49f9-a244-39b3da95ecbd",
+    "booking2Id": "52e952d6-f62e-4c5c-8163-ab77839337b8",
+    "usher1Id": "a6814289-f0c5-40b4-b7ac-a8973a9095d3",
+    "usher2Id": "2ed7b4d3-a26d-406f-9a70-d6654cdf26f5"
+  }
+}
